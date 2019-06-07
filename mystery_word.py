@@ -13,12 +13,6 @@ def ask_difficulty():
         return difficulty.lower()
     
 
-
-# print("hello, welcome to the game")
-# print(ask_difficulty())
-
-
-
 # _______________get length
 # # takes difficulty as argument, and depending on length finds a word of corresponding legnth
 def get_length(difficulty_value):
@@ -111,7 +105,7 @@ def guesser():
 def guess_compare(clean_guess, guess_record, wrong_guesses):
     new_record = []
     for i in guess_record:
-        if i[1] == 1 or i[0] == clean_guess:
+        if i[1] == 1 or i[0] == clean_guess.lower():
             new_record.append([i[0], 1])
         else:
             new_record.append([i[0], 0])
@@ -152,10 +146,13 @@ def gameplay():
     while has_won == False and wrong_guesses <= 8:
         clean_guess = guesser()
         # print(clean_guess)
-        guesses += clean_guess
+        if clean_guess not in guesses: 
+            guesses += clean_guess
+            if clean_guess not in new_record:
+                wrong_guesses += 1
         print("your already guessed letters are: ", end = '')
         for guess in range(len(guesses)): 
-            print(guesses[guess], ",", end = '')
+            print(guesses[guess], ", ", end = '')
         print()
         new_record = guess_compare(clean_guess, new_record, wrong_guesses)
         print(make_underscore_line(new_record))
